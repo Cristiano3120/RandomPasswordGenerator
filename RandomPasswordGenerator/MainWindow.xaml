@@ -7,113 +7,105 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" MinWidth="800" MinHeight="450" MaxWidth="800" MaxHeight="450"
             Background="#1f1e1f" WindowStyle="None" WindowStartupLocation="CenterScreen">
-
-    <WindowChrome.WindowChrome>
-        <WindowChrome CornerRadius="20" CaptionHeight="12" ResizeBorderThickness="3" UseAeroCaptionButtons="False" GlassFrameThickness="0"/>
-    </WindowChrome.WindowChrome>
-
-    <Grid>
+    <Grid x:Name="ParentGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8.5*"/>
             <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,0" Grid.Row="0" Grid.Column="1" Panel.ZIndex="1">
-            <Button x:Name="MinimizeBtn" Content="―"  BorderBrush="#1f1e1f" Height="30" Width="30" Margin="0, 0, 0, 0"/>
-            <Button x:Name="MaximizeBtn" Content="🗖"  BorderBrush="#1f1e1f" Height="30" Width="30" Margin="0, 0, 0, 0"/>
-            <Button x:Name="CloseBtn" Content="X"  BorderBrush="#1f1e1f" Height="30" Width="30" Margin="0, 0, 0, 0"/>
-        </StackPanel>
-
         <!--#region Left-->
 
-        <Button Width="80" Height="30" Margin="0, 0, 560, 400" Content="Generate" Name="GenerateBtn"/>
-        <Button Width="80" Height="30" Margin="0, 0, 380, 400" Content="Copy" Name="CopyBtn"/>
+        <Button Style="{StaticResource BorderBtn}" Width="80" Height="30" Margin="0, 0, 560, 370" Content="Generate" Name="GenerateBtn"/>
 
         <TextBox Background="#1f1e1f" Height="60" Width="650" IsReadOnly="True" IsReadOnlyCaretVisible="False" 
                  TextWrapping="Wrap" BorderThickness="0" FontSize="14" Padding="4" 
-                 Margin="20, 0, 200, 270" Name="PasswordTextBox"/>
+                 Margin="20, 0, 200, 270" FontWeight="SemiBold" Name="PasswordTextBox"/>
+
+        <TextBox Background="#1f1e1f" Height="35" Width="180" IsReadOnly="True" IsReadOnlyCaretVisible="False" 
+                 FontSize="18" Padding="4" BorderBrush="Transparent"  Margin="80, 0, 0, 400" FontWeight="SemiBold"
+                 Name="ClipboardTextBox" Text="Copied to Clipboard!" Visibility="Hidden"/>
 
         <!--#endregion-->
 
         <!--#region Right-->
 
-        <TextBlock Text="Length:" Grid.Column="1" Width="60" Height="20" Margin="0, 0, 0, 338"/>
+        <TextBlock Text="Length:" Grid.Column="1" Width="60" Height="20" Margin="0, 0, 20, 338"/>
 
         <TextBox x:Name="PasswordLengthTextBox" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" Text="30" 
-                 Width="25" Height="25" Padding="0" Margin="61, 0, 0, 342" FontSize="18"/>
+                 Width="25" Height="25" Padding="0" Margin="65, 0, 0, 340" FontSize="18" FontWeight="DemiBold"/>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,0,0,280" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use a-z" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use a-z" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="LowerCase" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,0,0,230" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use A-Z" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use A-Z" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="UpperCase" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,0,0,180" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use 0-9" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use 0-9" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="Digits" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,0,0,130" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use ()" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use ()" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="Brackets" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,0,0,80" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use {}" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use {}" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="CurlyBrackets" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,0,0,30" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use $" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use $" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="Dollar" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,20,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use !" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use !" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="ExclamationMark" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,70,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use ?" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use ?" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="QuestionMark" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,120,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use @" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use @" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="AtSign" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,170,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use #" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use #" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="Hashtag" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,220,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use %" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use %" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="Percent" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,270,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use ." Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use ." Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="Dot" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,320,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use &amp;" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use &amp;" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="And" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,370,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use &quot;" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use &quot;" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="QuotationMark" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Width="100" Height="30" Margin="0,420,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Use €" Width="50" Height="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Use €" Width="60" Height="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
             <CheckBox Tag="Euro" Click="CheckBox_Click" IsChecked="True" Background="#7c7e84" Width="15" Height="15" Margin="5,0,0,8" VerticalAlignment="Center"/>
         </StackPanel>
 

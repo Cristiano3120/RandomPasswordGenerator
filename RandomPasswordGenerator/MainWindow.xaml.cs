@@ -8,6 +8,8 @@ namespace RandomPasswordGenerator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private CancellationTokenSource? _cts;
+
         private readonly Dictionary<Chars, bool> _chars = new()
         {
             { Chars.UpperCase, true },
@@ -30,7 +32,7 @@ namespace RandomPasswordGenerator
         public MainWindow()
         {
             InitializeComponent();
-            ContolWindowState.RegisterWindowButtons(MinimizeBtn, CloseBtn);
+            GUIHelper.SetBasicWindowUI(this, ParentGrid);
             InitBtns();
         }
 
@@ -41,6 +43,8 @@ namespace RandomPasswordGenerator
                 if (int.TryParse(PasswordLengthTextBox.Text, out int passwordLength))
                 {
                     PasswordTextBox.Text = PasswordGenerator.GeneratePassword(_chars, passwordLength);
+                    Clipboard.SetText(PasswordTextBox.Text);
+                    _ = DisplayInfosAsync();
                 }
                 else
                 {
@@ -56,17 +60,29 @@ namespace RandomPasswordGenerator
                     args.Handled = true;
                 }
             };
-            CopyBtn.Click += CopyBtn_Click;
         }
-
-        public void CopyBtn_Click(object sender, RoutedEventArgs args)
-            => Clipboard.SetText(PasswordTextBox.Text);
 
         private void CheckBox_Click(object sender, RoutedEventArgs args)
         {
             CheckBox checkBox = (CheckBox)sender;
             Chars chars = Enum.Parse<Chars>((string)checkBox.Tag);
             _chars[chars] = checkBox.IsChecked == true;
+        }
+
+        public async Task DisplayInfosAsync(ushort showTime = 3000)
+        {
+            _cts?.Cancel();
+            _cts = new CancellationTokenSource();
+            CancellationToken token = _cts.Token;
+
+            ClipboardTextBox.Visibility = Visibility.Visible;
+
+            try
+            {
+                await Task.Delay(showTime, token);
+                ClipboardTextBox.Visibility = Visibility.Hidden;
+            }
+            catch (TaskCanceledException) { }
         }
     }
 }
